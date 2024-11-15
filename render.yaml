@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: questdock
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn questdock.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: false
+      - key: PYTHON_VERSION
+        value: 3.9.18
+    autoDeploy: true
+    disk:
+      name: questdock-data
+      mountPath: /data
+      sizeGB: 1
+    healthCheckPath: /
